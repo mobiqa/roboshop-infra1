@@ -32,7 +32,7 @@ subnets = {
   db = {
     name              = "db"
     vpc_name          = "main"
-    cidr_block        = ["10.0.6.0/24", "10.0.7.0/24"]
+    cidr_block        = ["10.0.8.0/24", "10.0.9.0/24"]
     availability_zone = ["us-east-1a", "us-east-1b"]
     nat_gw            = true
   }
