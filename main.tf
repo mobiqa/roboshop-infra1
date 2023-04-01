@@ -1,5 +1,5 @@
 module "vpc" {
-  source         = "github.com/raghudevopsb70/tf-module-vpc"
+  source         = "github.com/mobiqa/tf-module-vpc1"
   env            = var.env
   default_vpc_id = var.default_vpc_id
 
@@ -10,22 +10,17 @@ module "vpc" {
   availability_zone = each.value.availability_zone
 }
 
-//module "subnets" {
-//  source         = "github.com/raghudevopsb70/tf-module-subnets"
-//  env            = var.env
-//  default_vpc_id = var.default_vpc_id
-//
-//  for_each                  = var.subnets
-//  cidr_block                = each.value.cidr_block
-//  availability_zone         = each.value.availability_zone
-//  name                      = each.value.name
-//  vpc_id                    = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_id", null)
-//  vpc_peering_connection_id = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_peering_connection_id", null)
-//  internet_gw               = lookup(each.value, "internet_gw", false)
-//  nat_gw                    = lookup(each.value, "nat_gw", false)
-//}
 
-//
+module "docdb" {
+  source = "github.com/mobiqa/tf-module-docdb1"
+  env    = var.env
+
+  for_each       = var.docdb
+  subnet_ids     = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), "private_subnet_ids", null), each.value.subnets_name, null), "subnet_ids", null)
+  vpc_id         = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_id", null)
+  allow_cidr     = lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)
+  engine_version = each.value.engine_version
+}
 output "out" {
   value = module.vpc
 }
