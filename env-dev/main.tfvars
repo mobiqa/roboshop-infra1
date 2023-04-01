@@ -11,7 +11,7 @@ vpc = {
     public = {
       name              = "public"
       vpc_name          =  "main"
-      cidr_block        = ["10.0.0.0/24", "10.0.1.0/24"]
+      cidr_block        = ["10.0.8.0/23", "10.0.10.0/23"]
       availability_zone = ["us-east-1a", "us-east-1b"]
     }
 #    web = {
