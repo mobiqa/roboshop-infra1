@@ -1,5 +1,7 @@
 env            = "dev"
 default_vpc_id ="vpc-0743b75d14e0514ea"
+bastion_cidr   = ["172.31.3.189/32"]
+
 
 
 vpc = {
@@ -75,4 +77,48 @@ rabbitmq = {
     deployment_mode    = "SINGLE_INSTANCE"
   }
 }
+alb = {
+  public = {
+    vpc_name     = "main"
+    subnets_type = "public_subnet_ids"
+    subnets_name = "public"
+    internal     = false
+  }
 
+  private = {
+    vpc_name     = "main"
+    subnets_type = "private_subnet_ids"
+    subnets_name = "app"
+    internal     = true
+  }
+}
+
+apps = {
+  frontend = {
+    component               = "frontend"
+    vpc_name                = "main"
+    subnets_type            = "private_subnet_ids"
+    subnets_name            = "web"
+    allow_cidr_subnets_type = "public_subnets"
+    allow_cidr_subnets_name = "public"
+    app_port                = 80
+    max_size                = 2
+    min_size                = 1
+    desired_capacity        = 1
+    instance_type           = "t3.micro"
+  }
+  catalogue = {
+    component               = "catalogue"
+    vpc_name                = "main"
+    subnets_type            = "private_subnet_ids"
+    subnets_name            = "app"
+    app_port                = 8080
+    allow_cidr_subnets_type = "private_subnets"
+    allow_cidr_subnets_name = "app"
+    max_size                = 2
+    min_size                = 1
+    desired_capacity        = 1
+    instance_type           = "t3.micro"
+  }
+
+}
