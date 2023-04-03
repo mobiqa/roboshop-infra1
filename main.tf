@@ -87,6 +87,7 @@ module "apps" {
   source = "github.com/mobiqa/tf-module-app1"
   env    = var.env
 
+  depends_on = [module.docdb, module.rds, module.rabbitmq, module.alb, module.rds, module.elasticache]
 
   for_each          = var.apps
   subnet_ids        = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), each.value.subnets_type, null), each.value.subnets_name, null), "subnet_ids", null)
@@ -99,6 +100,8 @@ module "apps" {
   desired_capacity  = each.value.desired_capacity
   instance_type     = each.value.instance_type
   bastion_cidr = var.bastion_cidr
+  monitor_cidr = var.monitor_cidr
+
 
 }
 
