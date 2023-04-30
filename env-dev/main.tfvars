@@ -2,7 +2,7 @@ env            = "dev"
 default_vpc_id = "vpc-0ce6a0df3efbac62f"
 #bastion_cidr   = ["172.31.3.189/32"]
 #monitor_cidr   = ["172.31.1.179/32"]
-#hosted_zone    = "mobiqa.online"
+hosted_zone    = "mobiqa.online"
 
 
 
