@@ -5,9 +5,6 @@ monitor_cidr   = ["172.31.8.248/32"]
 hosted_zone    = "mobiqa.online"
 
 
-
-
-
 vpc = {
   main = {
     cidr_block        = "10.0.0.0/16"
